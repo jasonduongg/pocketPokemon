@@ -244,7 +244,9 @@ const App = () => {
 
   const renderActionUI = () => (
     <SafeAreaView>
-     <Button onPress={() => leaveLobby()} title = "leave lobby"></Button>
+      <View className = "flex flex-row justify-start">
+      <Button onPress={() => leaveLobby()} title = "leave lobby"></Button>
+      </View>
      <ActionUI lobbyName = {lobbyName} code = {lobbyCode} gameState={currentLobby} playerNumber={playerNumber}/>
     </SafeAreaView>
   );

@@ -371,47 +371,40 @@ const PokemonActions = ({ gameState, playerNumber, code, lobbyName }) => {
   return (
       <View className = "w-full h-full">
         <SafeAreaView>
-      
-
-        <View className = "flex flex-row w-full justify-center">
-          {!full && <Text className = "text-black text-xl" >Lobby Code: {code}</Text>}
-          
-          {full && (
-            currentPlayerTurn === playerNumber ? (
-              <Text className="text-red-500 text-xl">YOUR TURN!</Text>
-            ) : (
-              <Text className="text-red-500 text-xl">OPPONENTS TURN!</Text>
-            )
-          )}
-        </View>
-
-  
-
-       
-
-  
-        {requireSwitch ? (
-          <>
-          <View className = "flex flex-column justify-center items-center">
-            <Text>Switch your Pokemon!</Text>
-            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-              {Object.keys(currentTeam).map((key, index) => (
-                <View>
-
-                <Button
-                  title={key}
-                  onPress={() => handleSwitchForced(key)}
-                  disabled={currentTeam[key].health <= 0 || key === currentPokemon}
-                  key={index}
-                />
-                <Image source={images[key]} style={{ width: 100, height: 100 }} />
-
-                </View>
-              ))}
-            </View>
+          <View className = "flex flex-row w-full ml-2">
+            {!full && <Text className = "text-black text-xl" >Lobby Code: {code}</Text>}
+            
+            {full && (
+              currentPlayerTurn === playerNumber ? (
+                <Text className="text-red-500 text-xl font-bold">YOUR TURN!</Text>
+              ) : (
+                <Text className="text-red-500 text-xl font-bold">OPPONENTS TURN!</Text>
+              )
+            )}
           </View>
-          </>
-        ) : (
+
+          {requireSwitch ? (
+            <>
+              <View className = "flex flex-column justify-center items-center">
+                <Text>Switch your Pokemon!</Text>
+                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                  {Object.keys(currentTeam).map((key, index) => (
+                    <View>
+
+                    <Button
+                      title={key}
+                      onPress={() => handleSwitchForced(key)}
+                      disabled={currentTeam[key].health <= 0 || key === currentPokemon}
+                      key={index}
+                    />
+                    <Image source={images[key]} style={{ width: 100, height: 100 }} />
+
+                    </View>
+                  ))}
+                </View>
+              </View>
+            </>
+            ) : (
           <View>
             <View className=" flex relative w-[100vw] h-52 bg-gray-200 items-center justify-center">
               <View className="flex relative w-[100%] h-[100%]">
