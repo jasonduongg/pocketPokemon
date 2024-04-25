@@ -131,15 +131,12 @@ const App = () => {
   }
 
   function createLobby() {
-    if (name === '') {
-      alert('Please enter a name');
-      return;
-    }
+
     const code = generateRandomCode();
     const lobbyRef = push(ref(db, 'lobbies'));
     const lobbyData = {
       code: code,
-      player1_name: name,
+      player1_name: "1", //PLACEHOLDER
       player1: {pokemonData},
       player1_active: Object.keys(pokemonData)[0],
       player2_name: "",
@@ -162,10 +159,6 @@ const App = () => {
   async function joinLobby(lobbyCode) {
     if (lobbyCode === '') {
       alert('Please enter a lobby code');
-      return;
-    }
-    if (name === '') {
-      alert('Please enter a name');
       return;
     }
 
@@ -192,7 +185,7 @@ const App = () => {
         } else {
           let pokemonData = pokemonData2
           update(targetLobbyRef, {
-            player2_name: name,
+            player2_name: "2", //PLACE HOLDER
             player2: {pokemonData},
             player2_active: Object.keys(pokemonData2)[0]
           }).then(() => {
@@ -220,43 +213,40 @@ const App = () => {
   }
 
   const renderLandingUI = () => (
-    <>
-      <TextInput
-        style={{ backgroundColor: 'gray', width: 200, height: 40 }}
-        value={name}
-        onChangeText={(text) => setName(text)}
-        placeholder="Name"
-      />
-      <TextInput
-        style={{ backgroundColor: 'gray', width: 200, height: 40, marginTop: 20 }}
-        value={lobbyCode}
-        onChangeText={(text) => setLobbyCode(text)}
-        placeholder="Enter Lobby Code"
-      />
-      <Button onPress={() => joinLobby(lobbyCode)} title="Join Lobby" />
-      {Object.keys(currentLobby).length > 0 && (
-        <View style={{ marginTop: 20 }}>
-          <Text>Lobby Code: {currentLobby.code}</Text>
-          <Text>Player 1: {currentLobby.player1_name}</Text>
-          <Text>Player 2: {currentLobby.player2_name || 'None'}</Text>
-          <Text>Whose Turn: {currentLobby.whosTurn}</Text>
+    <View className="bg-gray-200 flex items-center justify-center h-screen">
+      <SafeAreaView className="flex flex-col items-center justify-center w-[80vw] bg-green-500">
+  
+        <View className="border-2 border-black bg-red-200 text-white p-2 rounded w-full">
+          <Button
+          onPress={createLobby}
+          title="Create New Lobby"
+          />
         </View>
-      )}
-      <Button onPress={createLobby} title="Create Lobby" />
-    </>
+        <View className="border-2 border-black bg-red-200 text-white p-2 rounded w-full flex flex-column justify-center items-center">
+          <TextInput
+            className="bg-gray-400 h-10 w-1/2 mt-4 px-2"
+            value={lobbyCode}
+            onChangeText={(text) => setLobbyCode(text)}
+            placeholder="Enter Lobby Code"
+          />
+          <Button className = "text-white" onPress={() => joinLobby(lobbyCode)} title="Join Lobby" />
+         </View>
+        </SafeAreaView>
+    </View>
+
   );
 
   const renderActionUI = () => (
-    <>
+    <SafeAreaView>
      <Button onPress={() => leaveLobby()} title = "leave lobby"></Button>
      <ActionUI lobbyName = {lobbyName} code = {lobbyCode} gameState={currentLobby} playerNumber={playerNumber}/>
-    </>
+    </SafeAreaView>
   );
 
   return (
-    <SafeAreaView>
+    <View>
       {Object.keys(currentLobby).length === 0 ? renderLandingUI() : renderActionUI()}
-    </SafeAreaView>
+    </View>
   );
 
 };
