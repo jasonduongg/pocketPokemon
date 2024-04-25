@@ -16,14 +16,11 @@ const App = () => {
   const pokemonData = {
     pikachu: {
       attacks: {
-        thunderbolt: {
-          damage: 90,
-          element: 'electric'
-        },
-        quickAttack: {
-          damage: 40,
-          element: 'normal'
-        }
+        thunderbolt: { damage: 90, element: 'electric' },
+        quickAttack: { damage: 40, element: 'normal' },
+        // Add two more attacks to make a total of four attacks
+        lightingBall: { damage: 50, element: 'normal' },
+        bait: { damage: 60, element: 'electric' }
       },
       blocks: 2,
       boost: 1,
@@ -34,14 +31,11 @@ const App = () => {
     },
     charizard: {
       attacks: {
-        flamethrower: {
-          damage: 90,
-          element: 'fire'
-        },
-        dragonClaw: {
-          damage: 80,
-          element: 'dragon'
-        }
+        flamethrower: { damage: 90, element: 'fire' },
+        dragonClaw: { damage: 80, element: 'dragon' },
+        // Add two more attacks to make a total of four attacks
+        chomp: { damage: 70, element: 'fire' },
+        punch: { damage: 85, element: 'dragon' }
       },
       blocks: 2,
       boost: 1,
@@ -52,14 +46,11 @@ const App = () => {
     },
     bulbasaur: {
       attacks: {
-        vineWhip: {
-          damage: 45,
-          element: 'grass'
-        },
-        razorLeaf: {
-          damage: 55,
-          element: 'grass'
-        }
+        vineWhip: { damage: 45, element: 'grass' },
+        razorLeaf: { damage: 55, element: 'grass' },
+        // Add two more attacks to make a total of four attacks
+        charge: { damage: 60, element: 'grass' },
+        acidRain: { damage: 70, element: 'grass' }
       },
       blocks: 2,
       boost: 1,
@@ -73,14 +64,11 @@ const App = () => {
   const pokemonData2 = {
     squirtle: {
       attacks: {
-        waterGun: {
-          damage: 40,
-          element: 'water'
-        },
-        shellAttack: {
-          damage: 50,
-          element: 'normal'
-        }
+        waterGun: { damage: 40, element: 'water' },
+        shellAttack: { damage: 50, element: 'normal' },
+        // Add two more attacks to make a total of four attacks
+        whirlPool: { damage: 45, element: 'water' },
+        loudSnore: { damage: 55, element: 'normal' }
       },
       blocks: 2,
       boost: 1,
@@ -91,14 +79,11 @@ const App = () => {
     },
     eevee: {
       attacks: {
-        tackle: {
-          damage: 35,
-          element: 'normal'
-        },
-        quickAttack: {
-          damage: 40,
-          element: 'normal'
-        }
+        tackle: { damage: 35, element: 'normal' },
+        quickAttack: { damage: 40, element: 'normal' },
+        // Add two more attacks to make a total of four attacks
+        dash: { damage: 30, element: 'normal' },
+        heavenlySword: { damage: 45, element: 'normal' }
       },
       blocks: 2,
       boost: 1,
@@ -109,14 +94,11 @@ const App = () => {
     },
     jolteon: {
       attacks: {
-        thunderShock: {
-          damage: 65,
-          element: 'electric'
-        },
-        pinMissile: {
-          damage: 25,
-          element: 'bug'
-        }
+        thunderShock: { damage: 65, element: 'electric' },
+        pinMissile: { damage: 25, element: 'bug' },
+        // Add two more attacks to make a total of four attacks
+        flash: { damage: 30, element: 'electric' },
+        pewpew: { damage: 40, element: 'electric' }
       },
       blocks: 2,
       boost: 1,

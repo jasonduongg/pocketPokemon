@@ -161,6 +161,7 @@ const PokemonActions = ({ gameState, playerNumber, code, lobbyName }) => {
 
   const handleAttack = (attack) => {
     if (OPBlockStance == true) {
+      setDiceAnimation([0,0,0,0,0])
       const calculatedDamage = (currentAttacks[attack].damage * 0.2 * currentBoostMultiplier).toFixed(1);
       setTimeout(() => {
         const gameRef = ref(db, `lobbies/${lobbyName}`);
@@ -500,16 +501,24 @@ const PokemonActions = ({ gameState, playerNumber, code, lobbyName }) => {
 
   
             {showAttacks && (
-              <>
+              <View className="flex flex-col justify-center items-center mt-5">
                 {Object.keys(currentAttacks).map((key, index) => (
-                  <Button title={key} onPress={() => handleAttack(key)} key={index} />
+                  index % 2 === 0 && ( // Create a new row after every 2 attacks
+                    <View className="flex flex-row w-[100%] justify-center" key={index}>
+                      {Object.keys(currentAttacks).slice(index, index + 2).map((attackKey, attackIndex) => (
+                        <View className = "border-2 border-black w-[40%] rounded-3xl m-1">
+                          <Button title={attackKey} onPress={() => handleAttack(attackKey)} key={attackIndex} />
+                        </View>
+                      ))}
+                    </View>
+                  )
                 ))}
-              </>
+              </View>
             )}
-  
+
             {showRoster && (
             <SafeAreaView>
-              <ScrollView horizontal={true} style={{ flexDirection: 'row' }}>
+              <ScrollView className = "ml-4 mr-4" horizontal={true} style={{ flexDirection: 'row' }}>
                 {Object.keys(currentTeam).map((key, index) => (
                   <View key={index} style={{ marginRight: 10 }}>
                     <Button
