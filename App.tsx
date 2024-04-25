@@ -25,6 +25,10 @@ const App = () => {
           element: 'normal'
         }
       },
+      blocks: 2,
+      boost: 1,
+      boostMultiplier: 1,
+      currentBlocked: false,
       health: 100,
       maxHealth: 100,
     },
@@ -39,6 +43,10 @@ const App = () => {
           element: 'dragon'
         }
       },
+      blocks: 2,
+      boost: 1,
+      boostMultiplier: 1,
+      currentBlocked: false,
       health: 150,
       maxHealth: 150,
     },
@@ -53,6 +61,10 @@ const App = () => {
           element: 'grass'
         }
       },
+      blocks: 2,
+      boost: 1,
+      boostMultipier: 1,
+      currentBlocked: false,
       health: 120,
       maxHealth: 120,
     }
@@ -70,6 +82,10 @@ const App = () => {
           element: 'normal'
         }
       },
+      blocks: 2,
+      boost: 1,
+      boostMultiplier: 1,
+      currentBlocked: false,
       health: 110,
       maxHealth: 110
     },
@@ -84,6 +100,10 @@ const App = () => {
           element: 'normal'
         }
       },
+      blocks: 2,
+      boost: 1,
+      boostMultiplier: 1,
+      currentBlocked: false,
       health: 95,
       maxHealth: 95
     },
@@ -98,6 +118,10 @@ const App = () => {
           element: 'bug'
         }
       },
+      blocks: 2,
+      boost: 1,
+      boostMultiplier: 1,
+      currentBlocked: false,
       health: 90,
       maxHealth: 90
     }
