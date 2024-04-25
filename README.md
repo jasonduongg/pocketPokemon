@@ -51,13 +51,22 @@ To get started with Pocket Pokemon, follow these steps:
     npm start
     ```
 
-2. Open the Xcode workspace file (`AwesomeProject.xcworkspace`) in Xcode:
+2. xcrun simctl list devices: pick two different devices on this list (developed for IPhone)
 
     ```bash
     open ios/AwesomeProject.xcworkspace
     ```
 
-3. Build and run the project in Xcode.
+3. Open new terminal
+    ```bash
+    cd pocketPoke
+    npm run ios --simulator="iPhone {#}”
+    ```
+
+4. Hover the simulator, on top left click on File => New device, pick one that is not running
+    ```bash
+    npm run ios --simulator="iPhone {#}”
+    ```
 
 ### Usage
 
