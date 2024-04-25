@@ -5,24 +5,42 @@ import { db } from '../config';
 
 const PokemonActions = ({ gameState, playerNumber, code, lobbyName }) => {
   const [diceRollResult, setDiceRollResult] = useState(0);
-  const [rollingAnimation] = useState(new Animated.Value(0));
-  const [diceAnimation, setDiceAnitmation] = useState([0,0,0,0,0]) 
+  const [diceAnimation, setDiceAnimation] = useState([0,0,0,0,0]) 
+  const [gameConsole, setGameConsole] = useState("Test")
 
 
   const rollDice = () => {
-    
-      const randomRoll = 
-      [
+    const randomRoll = [
+      Math.floor(Math.random() * 10) + 1,
+      Math.floor(Math.random() * 10) + 1,
+      Math.floor(Math.random() * 10) + 1,
+      Math.floor(Math.random() * 10) + 1,
+      Math.floor(Math.random() * 10) + 1,
+    ];
+  
+    // Animate the dice roll
+    const animationInterval = setInterval(() => {
+      const animatedRoll = [
         Math.floor(Math.random() * 10) + 1,
         Math.floor(Math.random() * 10) + 1,
         Math.floor(Math.random() * 10) + 1,
         Math.floor(Math.random() * 10) + 1,
         Math.floor(Math.random() * 10) + 1,
       ];
-      setDiceAnitmation(randomRoll)
-      return randomRoll
-   
+      setDiceAnimation(animatedRoll);
+    }, 250); // Change every 250 milliseconds (4 times per second)
+  
+    // Stop the animation after 1 second and set the result
+    setTimeout(() => {
+      clearInterval(animationInterval);
+      setDiceAnimation(randomRoll); // Set the final animation state
+      setDiceRollResult(randomRoll[2]);
+    }, 1000); // Stop after 1 second (1000 milliseconds)
+    return (randomRoll[2])
   };
+  
+
+  
 
 
 
@@ -59,6 +77,8 @@ const PokemonActions = ({ gameState, playerNumber, code, lobbyName }) => {
     setCurrentState(gameState);
     setMyPlayerNumber(playerNumber);
     setPlayersTurn(gameState.whosTurn);
+    setGameConsole(gameState.gameConsole);
+
 
     if (gameState && gameState[playerNumber]) {
       const playerData = gameState[playerNumber];
@@ -94,7 +114,9 @@ const PokemonActions = ({ gameState, playerNumber, code, lobbyName }) => {
       }
     }
     if (full && currentHealth <= 0) {
+      setTimeout(() => {
       setRequireSwitch(true)
+      }, 1000)
     }
   }, [gameState, playerNumber]);
 
@@ -125,37 +147,56 @@ const PokemonActions = ({ gameState, playerNumber, code, lobbyName }) => {
   }
 
   const handleAttack = (attack) => {
-    const diceRoll = rollDice()
-
+  
+  
+    const latestDiceRollResult = rollDice();
+  
     let damageMultiplier = 1;
-    if (diceRoll === 5) {
+    if (latestDiceRollResult === 5) {
       damageMultiplier = 2;
-    } else if (diceRoll === 4 || diceRoll === 6) {
+    } else if (latestDiceRollResult === 4 || latestDiceRollResult === 6) {
       damageMultiplier = 0;
-    } else if (diceRoll === 4 || diceRoll === 6) {
-      damageMultiplier = 1;
-    } else if (diceRoll === 3 || diceRoll === 7) {
+    } else if (latestDiceRollResult === 3 || latestDiceRollResult === 7) {
       damageMultiplier = 0.75;
-    } else if (diceRoll === 2 || diceRoll == 8) {
+    } else if (latestDiceRollResult === 2 || latestDiceRollResult === 8) {
       damageMultiplier = 0.5;
-    } else if (diceRoll === 1 || diceRoll === 10) {
+    } else if (latestDiceRollResult === 1 || latestDiceRollResult === 10) {
       damageMultiplier = 0;
     }
+  
+    // Calculate the damage using the latest dice roll result
     const calculatedDamage = currentAttacks[attack].damage * damageMultiplier;
+  
+    // Set the game console message including the latest dice roll result
+    setTimeout(() => {
+      const gameRef = ref(db, `lobbies/${lobbyName}`);
+      const updates = {};
+      updates['gameConsole'] = `${playerNumber} has attacked ${OPNumber} using ${currentPokemon} to ${OPPokemon} with ${attack}. A dice roll of ${latestDiceRollResult} gives a multipler of ${damageMultiplier} for a total of ${calculatedDamage} `
+      
+      return update(gameRef, updates)
+        .then(() => {
+          console.log('console updated successfully!');
+        })
+        .catch(error => {
+          console.error('Failed to update console', error);
+        });
+    }, 1200); 
 
-    console.log(playerNumber + " has attacked " + OPNumber + " using " + currentPokemon + " to " + OPPokemon + " with " + attack)
-    const gameRef = ref(db, `lobbies/${lobbyName}/${OPNumber}/pokemonData/${OPPokemon}`);
-    const updates = {};
-    updates['health'] = OPHealth - calculatedDamage;
-    return update(gameRef, updates)
-      .then(() => {
-        console.log('Health updated successfully!');
-        handleTurnChange()
-      })
-      .catch(error => {
-        console.error('Failed to update Health:', error);
-      });
-  }
+    setTimeout(() => {
+      const gameRef = ref(db, `lobbies/${lobbyName}/${OPNumber}/pokemonData/${OPPokemon}`);
+      const updates = {};
+      updates['health'] = OPHealth - calculatedDamage;
+      return update(gameRef, updates)
+        .then(() => {
+          console.log('Health updated successfully!');
+          handleTurnChange();
+        })
+        .catch(error => {
+          console.error('Failed to update Health:', error);
+        });
+      }, 1200); 
+  };
+  
 
   const handleSwitch = (pokemon) => {
     const gameRef = ref(db, `lobbies/${lobbyName}`);
@@ -209,6 +250,14 @@ const PokemonActions = ({ gameState, playerNumber, code, lobbyName }) => {
       eevee: require('../img/eevee.png'),
       jolteon: require('../img/jolteon.png'),
     };
+
+    const BlockView = ({number, index}) => {
+      return (
+        <View className={`border-black border-2 ${index === 2 ? 'bg-green-300' : ''}`}>
+          <Text> {number} </Text>
+        </View>
+      );      
+    };
     
 
 
@@ -231,13 +280,14 @@ const PokemonActions = ({ gameState, playerNumber, code, lobbyName }) => {
           )}
         </View>
 
-        <Text>{diceAnimation}</Text>
+  
 
        
 
   
         {requireSwitch ? (
           <>
+          <View className = "flex flex-column justify-center items-center">
             <Text>Switch your Pokemon!</Text>
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
               {Object.keys(currentTeam).map((key, index) => (
@@ -254,10 +304,11 @@ const PokemonActions = ({ gameState, playerNumber, code, lobbyName }) => {
                 </View>
               ))}
             </View>
+          </View>
           </>
         ) : (
           <View>
-            <View className=" flex relative w-[100vw] h-96 bg-gray-200 items-center justify-center">
+            <View className=" flex relative w-[100vw] h-52 bg-gray-200 items-center justify-center">
               <View className=" flex relative w-[90%] h-[90%]">
                 <View className="absolute top-0 right-0 flex flex-column justify-center items-center ">
                   <Text className = "text-lg">{OPPokemon.charAt(0).toUpperCase() + OPPokemon.slice(1)}</Text>
@@ -273,10 +324,25 @@ const PokemonActions = ({ gameState, playerNumber, code, lobbyName }) => {
               </View>
             </View>
 
-          
+            <View className = "flex flex-row justify-center mt-4 mb-4">
+              <View className = "flex flex-row justify-center">
+                {diceAnimation.map((key, index) => (
+                  <BlockView number={key} index = {index} />
+                ))}
+              </View>
+            </View>
+
+            <View className = "flex flex-row justify-center mb-1">
+              <View className ="border-black border-2 w-[80%]">
+                  <Text className = "p-4">{gameConsole}</Text>
+              </View>
+            </View>
+            
+
             {full ? (
-              <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                <View className="border-2 border-black bg-white text-white p-2 rounded w-1/2">
+              <View className = "flex flex-row justify-center mt-2">
+              <View className = "flex flex-row w-[80%] justify-between">
+                <View className="border-2 border-black bg-white text-white rounded w-1/2 mr-1">
                 <Button
                   onPress={toggleAttacks}
                   title="Attack"
@@ -285,7 +351,7 @@ const PokemonActions = ({ gameState, playerNumber, code, lobbyName }) => {
                 />
                 </View>
 
-                <View className="border-2 border-black bg-white text-white p-2 rounded w-1/2">
+                <View className="border-2 border-black bg-white text-white rounded ml-1 w-1/2">
                 <Button
                   onPress={toggleRoster}
                   title="Party"
@@ -293,6 +359,7 @@ const PokemonActions = ({ gameState, playerNumber, code, lobbyName }) => {
                   disabled={currentPlayerTurn !== playerNumber}
                 />
                 </View>
+              </View>
               </View>
             ) : (
               <Text>Waiting for player 2</Text>
