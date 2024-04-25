@@ -126,12 +126,12 @@ const PokemonActions = ({ gameState, playerNumber, code, lobbyName }) => {
         }
       }
     }
-    if (full && currentHealth <= 0) {
+    if (full && currentHealth <= 0 && !requireSwitch) {
       setTimeout(() => {
-      setRequireSwitch(true)
-      }, 1000)
-    }
-  }, [gameState, playerNumber]);
+        setRequireSwitch(true);
+      }, 1000);
+    }    
+  }, [gameState, playerNumber, requireSwitch]);
 
   const handleTurnChange = () => {
     const newTurn = currentPlayerTurn === `${playerNumber}` ? `${OPNumber}` : `${playerNumber}`;  
@@ -273,7 +273,6 @@ const PokemonActions = ({ gameState, playerNumber, code, lobbyName }) => {
     // Update the active Pokemon for the current player in the lobby
     update(gameRef, updates)
       .then(() => {
-        setRequireSwitch(false)
         handleTurnChange()
         console.log(`Switched ${pokemon} for player ${playerNumber}`);
       })
@@ -326,7 +325,6 @@ const PokemonActions = ({ gameState, playerNumber, code, lobbyName }) => {
     const gameRef = ref(db, `lobbies/${lobbyName}`);
     const updates = {};
     updates[`${playerNumber}_active`] = pokemon;
-  
     update(gameRef, updates)
       .then(() => {
         setRequireSwitch(false)
@@ -454,8 +452,8 @@ const PokemonActions = ({ gameState, playerNumber, code, lobbyName }) => {
             {full ? (
              <View className="flex flex-col justify-center mt-2">
               <View className="flex flex-row justify-center">
-                <View className="flex flex-row w-[80%] justify-between">
-                  <View className="border-2 border-black bg-white text-white rounded w-1/2 mr-1 mb-1">
+                <View className="flex flex-row w-[80%] justify-between x-space-2">
+                  <View className="border-2 border-black bg-white text-white rounded w-1/2 mb-1">
                     <Button
                       onPress={toggleAttacks}
                       title="Attack"
@@ -463,7 +461,7 @@ const PokemonActions = ({ gameState, playerNumber, code, lobbyName }) => {
                       disabled={currentPlayerTurn !== playerNumber}
                     />
                   </View>
-                  <View className="border-2 border-black bg-white text-white rounded w-1/2 ml-1 mb-1">
+                  <View className="border-2 border-black bg-white text-white rounded w-1/2 mb-1">
                     <Button
                       onPress={toggleRoster}
                       title="Party"
@@ -475,7 +473,7 @@ const PokemonActions = ({ gameState, playerNumber, code, lobbyName }) => {
               </View>
               <View className="flex flex-row justify-center">
                 <View className="flex flex-row w-[80%] justify-between">
-                  <View className="border-2 border-black bg-white text-white rounded w-1/2 mr-1 mb-1">
+                  <View className="border-2 border-black bg-white text-white rounded w-1/2 mb-1">
                     <Button
                       onPress={handleBoost}
                       title={`Boost (${currentBoost})`}
@@ -483,7 +481,7 @@ const PokemonActions = ({ gameState, playerNumber, code, lobbyName }) => {
                       disabled={currentPlayerTurn !== playerNumber}
                     />
                   </View>
-                  <View className="border-2 border-black bg-white text-white rounded w-1/2 ml-1 mb-1">
+                  <View className="border-2 border-black bg-white text-white rounded w-1/2 mb-1">
                     <Button
                       onPress={handleBlock}
                       title={`Block (${currentBlock})`}
