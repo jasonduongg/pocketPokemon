@@ -1,80 +1,73 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Pocket Pokemon
 
-# Getting Started
+Pocket Pokemon is a mobile app that allows users to engage in virtual Pokemon battles using React Native.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## Getting Started
 
-## Step 1: Start the Metro Server
+To get started with Pocket Pokemon, follow these steps:
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+### Prerequisites
 
-To start Metro, run the following command from the _root_ of your React Native project:
+- Node.js
+- npm (or yarn)
+- CocoaPods (for iOS development)
 
-```bash
-# using npm
-npm start
+### Installation
 
-# OR using Yarn
-yarn start
-```
+1. Clone the repository:
 
-## Step 2: Start your Application
+    ```bash
+    git clone https://github.com/jasonduongg/pocketPokemon
+    ```
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+2. Navigate to the project directory:
 
-### For Android
+    ```bash
+    cd pocketPokemon
+    ```
 
-```bash
-# using npm
-npm run android
+3. Install dependencies:
 
-# OR using Yarn
-yarn android
-```
+    ```bash
+    npm install
+    ```
 
-### For iOS
+    ```bash
+    bundle install
+    ```
 
-```bash
-# using npm
-npm run ios
+4. Install CocoaPods (for iOS development):
 
-# OR using Yarn
-yarn ios
-```
+    ```bash
+    cd ios
+    pod install
+    ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+### Running the App
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+1. Start the development server:
 
-## Step 3: Modifying your App
+    ```bash
+    npm start
+    ```
 
-Now that you have successfully run the app, let's modify it.
+2. Open the Xcode workspace file (`AwesomeProject.xcworkspace`) in Xcode:
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+    ```bash
+    open ios/AwesomeProject.xcworkspace
+    ```
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+3. Build and run the project in Xcode.
 
-## Congratulations! :tada:
+### Usage
 
-You've successfully run and modified your React Native App. :partying_face:
+- Follow the on-screen instructions to engage in Pokemon battles.
+- Use the provided buttons to attack, switch Pokemon, or use special moves.
 
-### Now what?
+### Contributing
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+Contributions to Pocket Pokemon are welcome! Please fork the repository, make your changes, and submit a pull request.
 
-# Troubleshooting
+### License
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
-# pocketPokemon
+This project is licensed under the [MIT License](LICENSE).
